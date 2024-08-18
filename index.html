@@ -1,90 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5H Pong Records</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f4;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5H Pong Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
 
-        h1 {
-            font-size: 1.5em;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    h1 {
+      font-size: 1.5em;
+      color: #333;
+      margin-bottom: 20px;
+    }
 
-        .main-title {
-            font-size: 3em;
-            color: red;
-            margin-bottom: 10px;
-        }
+    .main-title {
+      font-size: 3em;
+      color: red;
+      margin-bottom: 10px;
+    }
 
-        .tagline {
-            font-size: 1em;
-            color: #666;
-            margin-bottom: 40px;
-        }
+    .tagline {
+      font-size: 1em;
+      color: #666;
+      margin-bottom: 40px;
+    }
 
-        .buttons-container {
-            margin-bottom: 30px;
-        }
+    .buttons-container {
+      margin-bottom: 30px;
+    }
 
-        .button {
-            background-color: #333;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1em;
-            margin: 10px;
-            border-radius: 5px;
-            display: inline-block;
-        }
+    .button {
+      background-color: #333;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1em;
+      margin: 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
 
-        .button:hover {
-            background-color: #555;
-        }
+    .button:hover {
+      background-color: #555;
+    }
 
-        .new-match-container {
-            margin-top: 20px;
-        }
+    .new-match-container {
+      margin-top: 20px;
+    }
 
-        .new-match-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1em;
-            border-radius: 5px;
-            display: inline-block;
-        }
+    .new-match-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
 
-        .new-match-button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    .new-match-button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Play Pong!</h1>
+  <h1>Play Pong!</h1>
+  <div class="main-title">5H Pong Records</div>
+  <div class="tagline">For all of your ping pong needs</div>
 
-    <div class="main-title">5H Pong Records</div>
-    <div class="tagline">For all of your ping pong needs</div>
+  <div class="buttons-container">
+    <a href="rankings.html" class="button">Rankings</a>
+    <a href="players.html" class="button">Players</a>
+    <a href="match-history.html" class="button">Match History</a>
+  </div>
 
-    <div class="buttons-container">
-        <a href="rankings.html" class="button">Rankings</a>
-        <a href="players.html" class="button">Players</a>
-        <a href="match-history.html" class="button">Match History</a>
-    </div>
+  <div class="new-match-container">
+    <a href="new-match.html" class="new-match-button">New Match</a>
+  </div>
 
-    <div class="new-match-container">
-        <a href="new-match.html" class="new-match-button">New Match</a>
-    </div>
+  <script>
+    // You can add additional JavaScript here to fetch data from your deployed Google Apps Script
+    // using the functions like getRankings, getPlayerData, etc., if necessary.
+    // Example:
+
+    const scriptURL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+
+    // Example: Fetching and displaying the player data on the index page (if needed)
+    fetch(`${scriptURL}?action=getPlayerData`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Player Data:', data);
+        // You can manipulate the DOM to display this data as needed
+      })
+      .catch(error => console.error('Error fetching player data:', error));
+  </script>
 
 </body>
 </html>
