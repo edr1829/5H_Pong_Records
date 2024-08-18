@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match History - 5H Pong Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Match History</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Player 1</th>
+                <th>Player 2</th>
+                <th>Score</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody id="match-history-table">
+            <!-- Match history records will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Example match data - replace with data fetched from your source
+        const matchHistory = [
+            { date: '2023-08-15', player1: 'Nathan', player2: 'David', score: '11-8', winner: 'Nathan' },
+            { date: '2023-08-14', player1: 'Elijah', player2: 'Maria', score: '9-11', winner: 'Maria' },
+            // Add more match records as needed
+        ];
+
+        function populateMatchHistory() {
+            const matchHistoryTable = document.getElementById('match-history-table');
+            matchHistory.forEach(match => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${match.date}</td>
+                    <td>${match.player1}</td>
+                    <td>${match.player2}</td>
+                    <td>${match.score}</td>
+                    <td>${match.winner}</td>
+                `;
+                matchHistoryTable.appendChild(row);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', populateMatchHistory);
+    </script>
+
+</body>
+</html>
