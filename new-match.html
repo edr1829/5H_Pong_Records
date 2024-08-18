@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Match - 5H Pong Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label, input {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Start a New Match</h1>
+
+    <form id="match-form">
+        <label for="player1">Player 1 Name:</label>
+        <input type="text" id="player1" name="player1">
+
+        <label for="player2">Player 2 Name:</label>
+        <input type="text" id="player2" name="player2">
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="match-info" class="result-container"></div>
+
+    <script>
+        document.getElementById('match-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const player1 = document.getElementById('player1').value.trim();
+            const player2 = document.getElementById('player2').value.trim();
+
+            if (player1 && player2) {
+                // TODO: Fetch records and calculate handicap points, probability, etc.
+                const matchInfoDiv = document.getElementById('match-info');
+
+                // Mocking the calculated data
+                const handicapPoints = 2; // Replace with actual calculation
+                const probability1 = 0.6; // Replace with actual calculation
+                const probability2 = 0.4; // Replace with actual calculation
+
+                matchInfoDiv.innerHTML = `
+                    <h2>Match Details</h2>
+                    <p>${player1} vs ${player2}</p>
+                    <p>Handicap Points for ${player2}: ${handicapPoints}</p>
+                    <p>Probability for ${player1}: ${(probability1 * 100).toFixed(2)}%</p>
+                    <p>Probability for ${player2}: ${(probability2 * 100).toFixed(2)}%</p>
+                    <label for="score1">Score for ${player1}:</label>
+                    <input type="text" id="score1" name="score1">
+                    <label for="score2">Score for ${player2}:</label>
+                    <input type="text" id="score2" name="score2">
+                    <button onclick="submitScores()">Submit Scores</button>
+                `;
+            }
+        });
+
+        function submitScores() {
+            // TODO: Store the match info in the Match History page
+            const score1 = document.getElementById('score1').value;
+            const score2 = document.getElementById('score2').value;
+
+            alert(`Scores submitted: ${score1} - ${score2}`);
+            // Implement storage of match data
+        }
+    </script>
+
+</body>
+</html>
