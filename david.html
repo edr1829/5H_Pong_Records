@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David - 5H Pong Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      letter-spacing: 1px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    td {
+      font-size: 0.9em;
+    }
+
+    .home-button-container {
+      margin-top: 30px;
+    }
+
+    .home-button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .home-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>David's Stats</h1>
+
+  <h2>All Time Stats</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Total Matches</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Win Rate %</th>
+        <th>All Time Points</th>
+        <th>Best Winning Score</th>
+        <th>Worst Losing Score</th>
+      </tr>
+    </thead>
+    <tbody id="all-time-stats">
+      <!-- David's all-time stats will be populated here -->
+    </tbody>
+  </table>
+
+  <h2>Versus Stats</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Opponent</th>
+        <th>Matches</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Total Points</th>
+        <th>Average Point Gap</th>
+        <th>Handicap Points</th>
+        <th>Odds</th>
+      </tr>
+    </thead>
+    <tbody id="versus-stats">
+      <!-- David's versus stats will be populated here -->
+    </tbody>
+  </table>
+
+  <div class="home-button-container">
+    <a href="index.html" class="home-button">Home</a>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.4/tabletop.min.js"></script>
+  <script>
+    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1GncHqdMtHFK1JE6-q1M2DYWrLQqAQDvZ1CWfK0JgdXg/pubhtml';
+
+    window.addEventListener('DOMContentLoaded', init)
+
+    function init() {
+      Tabletop.init({
+        key: publicSpreadsheetUrl,
+        callback: showInfo,
+        simpleSheet: false
+      })
+    }
+
+    function showInfo(data, tabletop) {
+      const allTimeStats = tabletop.sheets('Players').elements.filter(player => player.Name === 'David')[0];
+      const versusStats = tabletop.sheets('Versus').elements.filter(match => match.Player === 'David');
+
+      // Populate all-time stats
+      const allTimeStatsTable = document.getElementById('all-time-stats');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${allTimeStats.Total_Matches}</td>
+        <td>${allTimeStats.Wins}</td>
+        <td>${allTimeStats.Losses}</td>
+        <td>${((allTimeStats.Wins / allTimeStats.Total_Matches) * 100).toFixed(2)}%</td>
+        <td>${allTimeStats.All_Time_Points}</td>
+        <td>${allTimeStats.Best_Winning_Score}</td>
+        <td>${allTimeStats.Worst_Losing_Score}</td>
+      `;
+      allTimeStatsTable.appendChild(row);
+
+      // Populate versus stats
+      const versusStatsTable = document.getElementById('versus-stats');
+      versusStats.forEach(match => {
+        const versusRow = document.createElement('tr');
+        versusRow.innerHTML = `
+          <td>${match.Opponent}</td>
+          <td>${match.Matches}</td>
+          <td>${match.Wins}</td>
+          <td>${match.Losses}</td>
+          <td>${match.Total_Points}</td>
+          <td>${match.Average_Point_Gap}</td>
+          <td>${match.Handicap_Points}</td>
+          <td>${match.Odds}</td>
+        `;
+        versusStatsTable.appendChild(versusRow);
+      });
+    }
+  </script>
+
+</body>
+</html>
