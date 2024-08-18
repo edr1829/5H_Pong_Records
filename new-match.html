@@ -1,113 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Match - 5H Pong Records</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Match - 5H Pong Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f4f4f4;
+    }
 
-        h1 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    h1 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
 
-        form {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-        label, input {
-            display: block;
-            margin: 10px 0;
-        }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 1em;
+      color: #333;
+    }
 
-        input[type="text"] {
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
 
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1em;
+    }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
 
-        .result-container {
-            margin-top: 20px;
-        }
-    </style>
+    .cancel-button-container {
+      margin-top: 20px;
+    }
+
+    .cancel-button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .cancel-button:hover {
+      background-color: #555;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Start a New Match</h1>
+  <h1>Start a New Match</h1>
 
-    <form id="match-form">
-        <label for="player1">Player 1 Name:</label>
-        <input type="text" id="player1" name="player1">
+  <form id="match-form" onsubmit="submitMatch(event)">
+    <label for="player1">Player 1 Name:</label>
+    <input type="text" id="player1" name="player1" required>
 
-        <label for="player2">Player 2 Name:</label>
-        <input type="text" id="player2" name="player2">
+    <label for="player2">Player 2 Name:</label>
+    <input type="text" id="player2" name="player2" required>
 
-        <input type="submit" value="Submit">
-    </form>
+    <label for="score1">Player 1 Score:</label>
+    <input type="number" id="score1" name="score1" required>
 
-    <div id="match-info" class="result-container"></div>
+    <label for="score2">Player 2 Score:</label>
+    <input type="number" id="score2" name="score2" required>
 
-    <script>
-        document.getElementById('match-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+    <input type="submit" value="Submit Match">
+  </form>
 
-            const player1 = document.getElementById('player1').value.trim();
-            const player2 = document.getElementById('player2').value.trim();
+  <div class="cancel-button-container">
+    <a href="index.html" class="cancel-button">Cancel</a>
+  </div>
 
-            if (player1 && player2) {
-                // TODO: Fetch records and calculate handicap points, probability, etc.
-                const matchInfoDiv = document.getElementById('match-info');
+  <script>
+    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1GncHqdMtHFK1JE6-q1M2DYWrLQqAQDvZ1CWfK0JgdXg/pubhtml';
 
-                // Mocking the calculated data
-                const handicapPoints = 2; // Replace with actual calculation
-                const probability1 = 0.6; // Replace with actual calculation
-                const probability2 = 0.4; // Replace with actual calculation
+    function submitMatch(event) {
+      event.preventDefault();
 
-                matchInfoDiv.innerHTML = `
-                    <h2>Match Details</h2>
-                    <p>${player1} vs ${player2}</p>
-                    <p>Handicap Points for ${player2}: ${handicapPoints}</p>
-                    <p>Probability for ${player1}: ${(probability1 * 100).toFixed(2)}%</p>
-                    <p>Probability for ${player2}: ${(probability2 * 100).toFixed(2)}%</p>
-                    <label for="score1">Score for ${player1}:</label>
-                    <input type="text" id="score1" name="score1">
-                    <label for="score2">Score for ${player2}:</label>
-                    <input type="text" id="score2" name="score2">
-                    <button onclick="submitScores()">Submit Scores</button>
-                `;
-            }
-        });
+      const player1 = document.getElementById('player1').value;
+      const player2 = document.getElementById('player2').value;
+      const score1 = document.getElementById('score1').value;
+      const score2 = document.getElementById('score2').value;
 
-        function submitScores() {
-            // TODO: Store the match info in the Match History page
-            const score1 = document.getElementById('score1').value;
-            const score2 = document.getElementById('score2').value;
+      // Store match data in Google Sheets using Tabletop.js or a form submission to a Google Form
+      console.log(`Match submitted: ${player1} (${score1}) vs ${player2} (${score2})`);
 
-            alert(`Scores submitted: ${score1} - ${score2}`);
-            // Implement storage of match data
-        }
-    </script>
+      alert('Match submitted successfully!');
+      window.location.href = 'index.html'; // Redirect back to the home page
+    }
+  </script>
 
 </body>
 </html>
