@@ -1,97 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rankings - 5H Pong Records</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rankings - 5H Pong Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f4f4f4;
+    }
 
-        h1 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    h1 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
 
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
 
-        th {
-            background-color: #333;
-            color: white;
-        }
-    </style>
+    th {
+      background-color: #333;
+      color: white;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      letter-spacing: 1px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    td {
+      font-size: 0.9em;
+    }
+
+    .home-button-container {
+      margin-top: 30px;
+    }
+
+    .home-button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .home-button:hover {
+      background-color: #555;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Current Rankings</h1>
+  <h1>Player Rankings</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Total Matches</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Win Rate %</th>
-                <th>All Time Points</th>
-                <th>Best Winning Score</th>
-                <th>Worst Losing Score</th>
-            </tr>
-        </thead>
-        <tbody id="rankings-table">
-            <!-- The table rows will be populated using JavaScript -->
-        </tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Total Matches</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Win Rate %</th>
+        <th>All Time Points</th>
+        <th>Best Winning Score</th>
+        <th>Worst Losing Score</th>
+      </tr>
+    </thead>
+    <tbody id="rankings-table">
+      <!-- Rankings data will be populated here -->
+    </tbody>
+  </table>
 
-    <script>
-        // Example players data - replace with data fetched from your source
-        const players = [
-            { name: 'Nathan', matches: 10, wins: 6, losses: 4, points: 200, bestWin: '11 to 5 against Elijah', worstLoss: '4 to 11 against David' },
-            { name: 'Elijah', matches: 12, wins: 7, losses: 5, points: 250, bestWin: '11 to 4 against Isaac', worstLoss: '3 to 11 against Nathan' },
-            { name: 'David', matches: 8, wins: 5, losses: 3, points: 180, bestWin: '11 to 6 against Nathan', worstLoss: '6 to 11 against Maria' },
-            { name: 'Maria', matches: 9, wins: 5, losses: 4, points: 220, bestWin: '11 to 5 against Ethan', worstLoss: '7 to 11 against Isaac' },
-            { name: 'Ethan', matches: 7, wins: 3, losses: 4, points: 150, bestWin: '11 to 7 against Maria', worstLoss: '5 to 11 against David' },
-            { name: 'Isaac', matches: 6, wins: 2, losses: 4, points: 130, bestWin: '11 to 4 against Elijah', worstLoss: '4 to 11 against Maria' }
-        ];
+  <div class="home-button-container">
+    <a href="index.html" class="home-button">Home</a>
+  </div>
 
-        function calculateWinRate(wins, matches) {
-            return ((wins / matches) * 100).toFixed(2);
-        }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.4/tabletop.min.js"></script>
+  <script>
+    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1GncHqdMtHFK1JE6-q1M2DYWrLQqAQDvZ1CWfK0JgdXg/pubhtml';
 
-        function populateRankings() {
-            const rankingsTable = document.getElementById('rankings-table');
-            players.forEach(player => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${player.name}</td>
-                    <td>${player.matches}</td>
-                    <td>${player.wins}</td>
-                    <td>${player.losses}</td>
-                    <td>${calculateWinRate(player.wins, player.matches)}%</td>
-                    <td>${player.points}</td>
-                    <td>${player.bestWin}</td>
-                    <td>${player.worstLoss}</td>
-                `;
-                rankingsTable.appendChild(row);
-            });
-        }
+    window.addEventListener('DOMContentLoaded', init)
 
-        document.addEventListener('DOMContentLoaded', populateRankings);
-    </script>
+    function init() {
+      Tabletop.init({
+        key: publicSpreadsheetUrl,
+        callback: showInfo,
+        simpleSheet: true
+      })
+    }
+
+    function showInfo(data) {
+      const rankingsTable = document.getElementById('rankings-table');
+      data.forEach(player => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${player.Name}</td>
+          <td>${player.Total_Matches}</td>
+          <td>${player.Wins}</td>
+          <td>${player.Losses}</td>
+          <td>${((player.Wins / player.Total_Matches) * 100).toFixed(2)}%</td>
+          <td>${player.All_Time_Points}</td>
+          <td>${player.Best_Winning_Score}</td>
+          <td>${player.Worst_Losing_Score}</td>
+        `;
+        rankingsTable.appendChild(row);
+      });
+    }
+  </script>
 
 </body>
 </html>
