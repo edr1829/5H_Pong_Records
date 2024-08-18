@@ -1,59 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Players - 5H Pong Records</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Players - 5H Pong Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f4f4f4;
+    }
 
-        h1 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    h1 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
 
-        .player-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-        .player-button {
-            background-color: #333;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1em;
-            margin: 10px;
-            border-radius: 5px;
-            display: inline-block;
-            width: 200px;
-            text-align: center;
-        }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
 
-        .player-button:hover {
-            background-color: #555;
-        }
-    </style>
+    th {
+      background-color: #333;
+      color: white;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      letter-spacing: 1px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    td {
+      font-size: 0.9em;
+    }
+
+    .home-button-container {
+      margin-top: 30px;
+    }
+
+    .home-button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .home-button:hover {
+      background-color: #555;
+    }
+  </style>
 </head>
 <body>
 
-    <h1>Select Player</h1>
+  <h1>Player List</h1>
 
-    <div class="player-buttons">
-        <a href="player-nathan.html" class="player-button">Nathan</a>
-        <a href="player-elijah.html" class="player-button">Elijah</a>
-        <a href="player-david.html" class="player-button">David</a>
-        <a href="player-maria.html" class="player-button">Maria</a>
-        <a href="player-ethan.html" class="player-button">Ethan</a>
-        <a href="player-isaac.html" class="player-button">Isaac</a>
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Total Matches</th>
+        <th>Wins</th>
+        <th>Losses</th>
+      </tr>
+    </thead>
+    <tbody id="player-table">
+      <!-- Player data will be populated here -->
+    </tbody>
+  </table>
+
+  <div class="home-button-container">
+    <a href="index.html" class="home-button">Home</a>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.4/tabletop.min.js"></script>
+  <script>
+    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/pubhtml';
+
+    window.addEventListener('DOMContentLoaded', init)
+
+    function init() {
+      Tabletop.init({
+        key: publicSpreadsheetUrl,
+        callback: showInfo,
+        simpleSheet: true
+      })
+    }
+
+    function showInfo(data) {
+      const playerTable = document.getElementById('player-table');
+      data.forEach(player => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${player.Name}</td>
+          <td>${player.Total_Matches}</td>
+          <td>${player.Wins}</td>
+          <td>${player.Losses}</td>
+        `;
+        playerTable.appendChild(row);
+      });
+    }
+  </script>
 
 </body>
 </html>
